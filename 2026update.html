@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>John Phillip Baker — Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+<style>
+  /* ── TOKENS ─────────────────────────────────────── */
+  :root {
+    --ink: #1a1a2e;
+    --mid: #4a4a6a;
+    --muted: #8888aa;
+    --rule: #dddde8;
+    --accent: #b5893a;
+    --bg: #faf9f7;
+    --card: #ffffff;
+    --open-bg: #f5f3ef;
+  }
+
+  /* ── RESET ───────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── LAYOUT ──────────────────────────────────────── */
+  .resume {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* ── HEADER ──────────────────────────────────────── */
+  .header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .header-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .header-tagline {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    margin-top: 14px;
+    font-size: 0.84rem;
+    color: var(--mid);
+  }
+  .header-meta span::before {
+    content: attr(data-icon);
+    margin-right: 5px;
+    color: var(--accent);
+  }
+
+  /* ── SECTION ─────────────────────────────────────── */
+  .section { margin-bottom: 8px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .section-header:hover { background: #f0ede8; border-color: var(--accent); }
+  .section-header.open { background: var(--open-bg); border-color: var(--accent); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .section-chevron {
+    font-size: 0.75rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+  .section-header.open .section-chevron { transform: rotate(180deg); }
+
+  .section-body {
+    display: none;
+    border: 1px solid var(--accent);
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: var(--open-bg);
+    padding: 4px 0 12px;
+  }
+  .section-body.open { display: block; }
+
+  /* ── ENTRIES ─────────────────────────────────────── */
+  .entry {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .entry:last-child { border-bottom: none; }
+
+  .entry-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .entry-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+  .entry-dates {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 300;
+    white-space: nowrap;
+  }
+  .entry-sub {
+    font-style: italic;
+    font-size: 0.84rem;
+    color: var(--mid);
+    margin-top: 1px;
+  }
+  .entry-desc {
+    margin-top: 6px;
+    font-size: 0.86rem;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+  .entry-desc ul {
+    list-style: none;
+    padding: 0;
+  }
+  .entry-desc ul li {
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 2px;
+  }
+  .entry-desc ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ── RECOGNITION (pill chips) ────────────────────── */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 20px;
+  }
+  .chip {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.8rem;
+    color: var(--mid);
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--ink); }
+  .chip.featured {
+    border-color: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* ── PROFILE BLURB ───────────────────────────────── */
+  .profile-blurb {
+    padding: 16px 20px;
+    font-size: 0.9rem;
+    color: var(--mid);
+    line-height: 1.65;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="resume" id="resume-root"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   RESUME DATA
+   To add a new experience, copy an entry object and
+   paste it into the appropriate section's `entries` array.
+   ═══════════════════════════════════════════════════ */
+
+const RESUME_DATA = {
+  name: "John Phillip Baker",
+  tagline: "Educator · Writer · Editor",
+  contact: [
+    { icon: "✉", text: "jpbaker1993@gmail.com" },
+    { icon: "☎", text: "(501) 773-3310" },
+    { icon: "📍", text: "Nashville, TN" },
+  ],
+
+  sections: [
+    {
+      id: "profile",
+      title: "Profile",
+      type: "blurb",
+      content: `Licensed secondary educator with classroom experience across public, private, and enrichment settings. Trained in English language arts with additional expertise in composition, research writing, and academic support. Detail-oriented editor and communicator with an affinity for technology and a record of presenting original scholarship at academic conferences.`
+    },
+    {
+      id: "experience",
+      title: "Experience",
+      type: "entries",
+      entries: [
+        // ── Add new entries at the TOP of this array ── //
+{
+  title: "Teacher, AP English Language & English 1 Honors",
+  org: "Page High School, Franklin, TN",
+  dates: "Jan 2021 – Present",
+  bullets: [
+    "Established consistent district-leading scores in AP English Language & Composition.",
+    "Designed, proposed, and taught a unique honors-level elective, Game Studies Seminar, that was approved at the state level.",
+    "Established and coached a brand new award-winning speech & debate program."
+  ]
+},
+{
+  title: "Teacher, 8th Grade English",
+  org: "Lipscomb Academy, Nashville, TN",
+  dates: "Aug 2019 - May 2020",
+  bullets: [
+    "Recreated 8th grade curriculum with a focus on design thinking.",
+    "Supervised students in after-school programs.",
+    "Coached an award-winning speech & debate program."
+  ]
+},
+        {
+          title: "Instructor, High School Literature & Composition",
+          org: "Upward Bound Summer Academy — Harding University, Searcy, AR",
+          dates: "Summers 2017 & 2018",
+          bullets: [
+            "Designed and delivered intensive summer coursework in literature and expository writing for pre-college students.",
+            "Supported college readiness through individualized instruction and writing workshops."
+          ]
+        },
+        {
+          title: "Teacher, 7th & 8th Grade English Language Arts",
+          org: "LISA Academy Middle School, Little Rock, AR",
+          dates: "Aug 2017 – May 2018",
+          bullets: [
+            "Planned and taught full-year ELA curriculum aligned to Arkansas state standards.",
+            "Differentiated instruction across a diverse student population in a public charter setting."
+          ]
+        },
+        {
+          title: "Teacher, Research, Writing & Study Strategies",
+          org: "Little Rock Christian Academy, Little Rock, AR",
+          dates: "Aug 2016 – May 2018",
+          bullets: [
+            "Taught 7th grade courses in academic research, expository writing, and learning strategies.",
+            "Integrated technology and process-based writing instruction into daily coursework."
+          ]
+        },
+        {
+          title: "Librarian",
+          org: "Baldwin Memorial Public Library, Judsonia, AR",
+          dates: "Sep 2015 – May 2016",
+          bullets: [
+            "Managed daily library operations including cataloging, patron services, and programming."
+          ]
+        },
+        {
+          title: "Administrative Assistant, Student Publications",
+          org: "Harding University, Searcy, AR",
+          dates: "Dec 2015 – May 2016",
+          bullets: [
+            "Provided organizational and editorial support to the Director of Student Publications.",
+          ]
+        },
+        {
+          title: "Writing Center Assistant",
+          org: "Harding University Library, Searcy, AR",
+          dates: "Aug – Dec 2015",
+          bullets: [
+            "Tutored undergraduate students on writing mechanics, structure, and argumentation across disciplines."
+          ]
+        },
+        {
+          title: "Copy Editor",
+          org: "Petit Jean Yearbook — Harding University, Searcy, AR",
+          dates: "Aug 2013 – May 2015",
+          bullets: [
+            "Edited copy for clarity, accuracy, and style consistency across a full-production annual yearbook."
+          ]
+        },
+        {
+          title: "Resident Assistant",
+          org: "Harding University, Searcy, AR",
+          dates: "Jan 2013 – May 2015",
+          bullets: [
+            "Fostered residential community through programming, conflict mediation, and mentorship.",
+            "Enforced university policy and served as a first point of contact for student concerns."
+          ]
+        },
+        {
+          title: "Peer Tutor",
+          org: "Harding University, Searcy, AR",
+          dates: "Aug – Dec 2012",
+          bullets: [
+            "Provided academic tutoring in English composition and related subjects."
+          ]
+        },
+      ]
+    },
+
+    {
+      id: "education",
+      title: "Education",
+      type: "entries",
+      entries: [
+        {
+          title: "Master of Education — Secondary Education (English Emphasis)",
+          org: "Harding University, Searcy, AR",
+          dates: "2015 – 2016",
+          bullets: ["GPA: 4.0", "Licensed to teach grades 7–12 in AR; TN licensure pending"]
+        },
+        {
+          title: "Bachelor of Arts — English",
+          org: "Harding University, Searcy, AR",
+          dates: "2011 – 2015",
+          bullets: ["Minor in Bible and Religion", "GPA: 3.9"]
+        }
+      ]
+    },
+
+    {
+      id: "conferences",
+      title: "Academic Presentations",
+      type: "entries",
+      entries: [
+        {
+          title: "\"Dialogues in Equality and Ideology\"",
+          org: "Granfalloon: A Vonnegut Gathering — Indiana University, Bloomington, IN",
+          dates: "2018",
+          bullets: []
+        },
+        {
+          title: "\"Gadflies Through the Ages\"",
+          org: "Humor in America Conference — Roosevelt University, Chicago, IL",
+          dates: "2018",
+          bullets: []
+        }
+      ]
+    },
+
+    {
+      id: "recognition",
+      title: "Recognition & Honors",
+      type: "chips",
+      chips: [
+        { text: "Bobby Coleman Teaching Award — Top Student Teacher in Language Arts", featured: true },
+        { text: "National Merit Scholar", featured: true },
+        { text: "Governor's Distinguished Scholar" },
+        { text: "Honors Scholar" },
+        { text: "Dean's List" },
+      ]
+    },
+
+    {
+      id: "involvement",
+      title: "Leadership & Involvement",
+      type: "chips",
+      chips: [
+        { text: "Roosevelt Institute" },
+        { text: "Likewise, Inc." },
+        { text: "Debate Team" },
+        { text: "Honors Council" },
+        { text: "Model Arab League" },
+        { text: "Theology Colloquy" },
+        { text: "Academic Misconduct Committee" },
+        { text: "Student Life Committee" },
+        { text: "University Assessment Committee" },
+        { text: "Student Association Academic Committee" },
+        { text: "Guest Writer, The Bison" },
+      ]
+    }
+
+  ] // end sections
+};
+
+/* ═══════════════════════════════════════════════════
+   RENDERER — no edits needed below this line
+   ═══════════════════════════════════════════════════ */
+
+function renderHeader(data) {
+  const metaHtml = data.contact.map(c =>
+    `<span data-icon="${c.icon}">${c.text}</span>`
+  ).join('');
+  return `
+    <div class="header">
+      <div class="header-name">${data.name}</div>
+      <div class="header-tagline">${data.tagline}</div>
+      <div class="header-meta">${metaHtml}</div>
+    </div>`;
+}
+
+function renderEntries(entries) {
+  return entries.map(e => {
+    const bulletsHtml = e.bullets && e.bullets.length
+      ? `<div class="entry-desc"><ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul></div>`
+      : '';
+    return `
+      <div class="entry">
+        <div class="entry-top">
+          <span class="entry-title">${e.title}</span>
+          <span class="entry-dates">${e.dates || ''}</span>
+        </div>
+        <div class="entry-sub">${e.org || ''}</div>
+        ${bulletsHtml}
+      </div>`;
+  }).join('');
+}
+
+function renderChips(chips) {
+  return `<div class="chips">${chips.map(c =>
+    `<span class="chip${c.featured ? ' featured' : ''}">${c.text}</span>`
+  ).join('')}</div>`;
+}
+
+function renderSection(sec) {
+  let bodyInner = '';
+  if (sec.type === 'blurb') bodyInner = `<div class="profile-blurb">${sec.content}</div>`;
+  if (sec.type === 'entries') bodyInner = renderEntries(sec.entries);
+  if (sec.type === 'chips') bodyInner = renderChips(sec.chips);
+
+  return `
+    <div class="section">
+      <div class="section-header" data-target="${sec.id}">
+        <span class="section-title">${sec.title}</span>
+        <span class="section-chevron">▼</span>
+      </div>
+      <div class="section-body" id="${sec.id}">${bodyInner}</div>
+    </div>`;
+}
+
+function renderResume() {
+  const root = document.getElementById('resume-root');
+  root.innerHTML =
+    renderHeader(RESUME_DATA) +
+    RESUME_DATA.sections.map(renderSection).join('');
+
+  // Accordion toggle
+  document.querySelectorAll('.section-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = document.getElementById(btn.dataset.target);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+    });
+  });
+
+  // Open Experience by default
+  const exp = document.getElementById('experience');
+  const expBtn = document.querySelector('[data-target="experience"]');
+  if (exp && expBtn) { exp.classList.add('open'); expBtn.classList.add('open'); }
+}
+
+renderResume();
+</script>
+</body>
+</html>
